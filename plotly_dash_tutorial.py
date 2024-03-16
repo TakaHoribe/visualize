@@ -1,5 +1,5 @@
 import dash
-from dash import dcc, html
+from dash import dcc, html, dash_table
 import plotly.express as px
 import pandas as pd
 
@@ -54,29 +54,56 @@ app.layout = html.Div(
         'backgroundColor': color_theme['background'],
         'color': color_theme['text'],
         'font-family': 'Open Sans, sans-serif',
-        # 'font-size': '26px',  # フォントサイズを追加
-        'font-weight': '400',  # フォントウェイトを追加
+        # 'font-size': '26px',
+        'font-weight': '400',
         'margin': 0,
         'height': '100vh',
         'display': 'flex',
         'flexDirection': 'column',
-        'padding': '20px'  # 全体のパディングを設定
+        'padding': '20px'
     },
     children=[
         html.Div(
             style={'padding': '2rem', 'flexGrow': 1},
             children=[
+                # タイトル
                 html.H1(children='DAILY SCENARIO TEST REPORT', style={
                     'color': color_theme['title-text'],
                     'marginBottom': '1rem',
                     'font-weight': '100'
                 }),
+                # ダッシュボードの説明
                 html.Div(children='Dash: A web application framework for Python.',
                         style={'marginBottom': '2rem'}),
-                html.Div(dcc.Graph(id='time-series-plot', figure=time_series), 
-                        style={'margin-bottom': '30px'}  # 時系列プロットの下の余白を設定
+                # 1行目
+                html.Div(
+                    style={'display': 'flex', 'flexDirection': 'row'},
+                    children=[
+                        # 左側のエリア（70%）
+                        html.Div(dcc.Graph(id='time-series-plot', figure=time_series), 
+                                style={'width': '80%', 'padding': '10px', 'margin-bottom': '30px'}  # 時系列プロットの下の余白を設定
+                        ),
+                        # 右側のエリア（30%）
+                        html.Div(
+                            style={'width': '20%', 'padding': '10px', 'margin-bottom': '30px'},
+                            children=[dcc.Graph(id='pie-chart', figure=pie_chart)]
+                        ),
+                    ]
                 ),
-                dcc.Graph(id='pie-chart', figure=pie_chart)
+                # 2行目
+                dcc.Graph(id='pie-chart2', figure=pie_chart),
+                # 3行目
+                # 左側のエリア（70%）
+                html.Div(
+                    style={'padding': '10px', 'overflowY': 'scroll', 'max-height': '300px'},
+                    children=[
+                        dash_table.DataTable(
+                            data=df.to_dict('records'),
+                            columns=[{'name': i, 'id': i} for i in df.columns],
+                            style_table={'overflowX': 'auto'}
+                        )
+                    ]
+                )
             ]
         )
     ]

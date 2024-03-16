@@ -11,7 +11,6 @@ To run this dashboard on your local machine, you will need Python installed, alo
 
 ```sh
 pip install -r requirements.txt
-
 ```
 
 To start the Dash app, run:

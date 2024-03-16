@@ -4,7 +4,7 @@ import plotly.express as px
 import pandas as pd
 
 # Reading the CSV data
-df = pd.read_csv('/home/horibe/workspace/visualize/sample_data.csv')
+df = pd.read_csv('/home/horibe/workspace/visualize/tutorial/sample_data.csv')
 
 # Preparing the data for the pie chart (aggregating by category)
 pie_data = df.groupby('Category')['Value'].sum().reset_index()

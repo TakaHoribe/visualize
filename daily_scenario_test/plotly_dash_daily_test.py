@@ -133,11 +133,11 @@ app.layout = html.Div(
     },
     children=[
         html.Div(
-            style={'padding': '2rem', 'flexGrow': 1},
+            style={'padding': '1rem', 'flexGrow': 1},
             children=[
                 # -- title --
                 html.H1(
-                    children='DAILY SCENARIO TEST REPORT',
+                    children='AD-COMPONENT TEST DASHBOARD',
                     style={
                         'color': color_theme['title-text'],
                         'marginBottom': '1rem',
@@ -146,73 +146,156 @@ app.layout = html.Div(
                 ),
                 # -- dashboard explanation --
                 html.Div(
-                    children='Dashboard for the results of daily scenario tests.',
-                    style={'marginBottom': '2rem'}
-                ),
-                # -- first layer --
-                html.Div(
-                    style={'display': 'flex', 'flexDirection': 'row'},
-                    children=[
-                        html.Div(
-                            dcc.Graph(id='time-series-plot', figure=time_series_plot),
-                            style={'width': '80%', 'padding': '10px', 'margin-bottom': '30px'}
-                        ),
-                        html.Div(
-                            style={'width': '20%', 'padding': '10px', 'margin-bottom': '30px'},
-                            children=[dcc.Graph(id='pie-chart', figure=pie_chart)]
-                        ),
-                    ]
-                ),
-                # -- second layer --
-                html.Div(
-                    dcc.Graph(id='pie-chart2', figure=ng_analysis_plot),
-                    style={'padding': '10px', 'margin-bottom': '30px'}
-                ),
-                # -- third layer --
-                html.Div(
+                    children='Dashboard for the ad-component daily tests.',
                     style={
-                        'padding': '10px',
-                        'overflowX': 'auto',
-                        'overflowY': 'auto',
-                        'max-height': '200pt',
-                        'margin-bottom': '30px'
-                    },
+                        'marginBottom': '1rem',
+                    }
+                )
+            ]),
+        dcc.Tabs(
+            style={
+                'display': 'flex',  # フレックスボックスとして表示
+                'align-items': 'center',  # 子要素を縦方向に中央揃え
+                'justify-content': 'center'  # 子要素を横方向に中央揃え
+            },
+            children=[
+            dcc.Tab(label='Planning', 
+                style={'backgroundColor': color_theme['dark-background'], 'color': 'white', 'padding': '1rem', 'border': 'none', 'borderRight': '1px solid gray'},
+                selected_style={'backgroundColor': color_theme['light-background'], 'color': 'white', 'padding': '1rem', 'border': 'none', 'borderRight': '1px solid gray'},                   
+                children=[
+                html.Div(
+                    style={'padding': '1rem', 'flexGrow': 1},
                     children=[
-                        dash_table.DataTable(
-                            data=df.to_dict('records'),
-                            columns=[{'name': i, 'id': i} for i in df.columns],
-                            style_table={
-                                "height": "1000px",
-                                'overflowX': 'visible',
-                                'overflowY': 'visible',
-                                'width': '100%',
-                                'minWidth': '100%',
-                                'backgroundColor': color_theme['title-text']
+                        # -- title --
+                        html.H2(
+                            children='Planning Daily Scenario Test Report',
+                            style={
+                                'color': color_theme['title-text'],
+                                'marginBottom': '1rem',
+                                'font-weight': '50'
+                            }
+                        ),
+                        # -- first layer --
+                        html.Div(
+                            style={'display': 'flex', 'flexDirection': 'row'},
+                            children=[
+                                html.Div(
+                                    dcc.Graph(id='time-series-plot', figure=time_series_plot),
+                                    style={'width': '80%', 'padding': '10px', 'margin-bottom': '30px'}
+                                ),
+                                html.Div(
+                                    style={'width': '20%', 'padding': '10px', 'margin-bottom': '30px'},
+                                    children=[dcc.Graph(id='pie-chart', figure=pie_chart)]
+                                ),
+                            ]
+                        ),
+                        # -- second layer --
+                        html.Div(
+                            dcc.Graph(id='pie-chart2', figure=ng_analysis_plot),
+                            style={'padding': '10px', 'margin-bottom': '30px'}
+                        ),
+                        # -- third layer --
+                        html.Div(
+                            style={
+                                'padding': '10px',
+                                'overflowX': 'auto',
+                                'overflowY': 'auto',
+                                'max-height': '200pt',
+                                'margin-bottom': '30px'
                             },
-                            fixed_rows={"headers": True},
-                            style_cell={
-                                'backgroundColor': color_theme['light-background'],
-                                'color': 'white',
-                                'minWidth': '150px',
-                                'width': '150px',
-                                'maxWidth': '150px',
-                            },
-                            style_header={
-                                'backgroundColor': color_theme['dark-background'],
-                                'color': 'white',
-                                'position': 'sticky',
-                                'top': 0,
-                                'zIndex': 10,
-                            },
-                            style_data={
-                                'border': '1px solid #183A54'
-                            },
-                            # fixed_rows={'headers': True},
+                            children=[
+                                dash_table.DataTable(
+                                    data=df.to_dict('records'),
+                                    columns=[{'name': i, 'id': i} for i in df.columns],
+                                    style_table={
+                                        "height": "1000px",
+                                        'overflowX': 'visible',
+                                        'overflowY': 'visible',
+                                        'width': '100%',
+                                        'minWidth': '100%',
+                                        'backgroundColor': color_theme['title-text']
+                                    },
+                                    fixed_rows={"headers": True},
+                                    style_cell={
+                                        'backgroundColor': color_theme['light-background'],
+                                        'color': 'white',
+                                        'minWidth': '150px',
+                                        'width': '150px',
+                                        'maxWidth': '150px',
+                                    },
+                                    style_header={
+                                        'backgroundColor': color_theme['dark-background'],
+                                        'color': 'white',
+                                        'position': 'sticky',
+                                        'top': 0,
+                                        'zIndex': 10,
+                                    },
+                                    style_data={
+                                        'border': '1px solid #183A54'
+                                    },
+                                    # fixed_rows={'headers': True},
+                                )
+                            ]
                         )
                     ]
                 )
-            ]
-        )
+            ]),
+            dcc.Tab(label='Perception', 
+                style={'backgroundColor': color_theme['dark-background'], 'color': 'white', 'padding': '1rem', 'border': 'none', 'borderRight': '1px solid gray'},
+                selected_style={'backgroundColor': color_theme['light-background'], 'color': 'white', 'padding': '1rem', 'border': 'none', 'borderRight': '1px solid gray'},                   
+                children=[
+                html.Div(
+                    style={'padding': '1rem', 'flexGrow': 1},
+                    children=[
+                        # -- title --
+                        html.H2(
+                            children='Perception Daily Test Report',
+                            style={
+                                'color': color_theme['title-text'],
+                                'marginBottom': '1rem',
+                                'font-weight': '50'
+                            }
+                        ),
+                        html.Div(
+                            style={'display': 'flex', 'flexDirection': 'row'},
+                            children=[
+                                html.Div(
+                                    dcc.Graph(id='perception-time-series-plot', figure=time_series_plot),
+                                    style={'width': '100%', 'padding': '10px', 'margin-bottom': '30px'}
+                                ),
+                            ]
+                        ),
+                ]),
+            ]),
+            dcc.Tab(label='Localization', 
+                style={'backgroundColor': color_theme['dark-background'], 'color': 'white', 'padding': '1rem', 'border': 'none'},
+                selected_style={'backgroundColor': color_theme['light-background'], 'color': 'white', 'padding': '1rem', 'border': 'none'},                   
+                children=[
+                html.Div(
+                    style={'padding': '1rem', 'flexGrow': 1},
+                    children=[
+                        # -- title --
+                        html.H2(
+                            children='Localization Daily Test Report',
+                            style={
+                                'color': color_theme['title-text'],
+                                'marginBottom': '1rem',
+                                'font-weight': '50'
+                            }
+                        ),
+                        html.Div(
+                            style={'display': 'flex', 'flexDirection': 'row'},
+                            children=[
+                                html.Div(
+                                    dcc.Graph(id='localization-time-series-plot', figure=ng_analysis_plot),
+                                    style={'width': '100%', 'padding': '10px', 'margin-bottom': '30px'}
+                                ),
+                            ]
+                        ),
+                    ],
+                ),
+            ])
+        ]),
     ]
 )
 

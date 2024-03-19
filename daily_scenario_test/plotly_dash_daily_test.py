@@ -125,7 +125,7 @@ app.layout = html.Div(
         'color': color_theme['text'],
         'font-family': 'Open Sans, sans-serif',
         'font-weight': '400',
-        'height': '100vh',
+        'height': 'auto',
         'display': 'flex',
         'flexDirection': 'column',
         'padding': '20px',
@@ -182,19 +182,27 @@ app.layout = html.Div(
                             data=df.to_dict('records'),
                             columns=[{'name': i, 'id': i} for i in df.columns],
                             style_table={
+                                "height": "1000px",
                                 'overflowX': 'visible',
                                 'overflowY': 'visible',
                                 'width': '100%',
                                 'minWidth': '100%',
                                 'backgroundColor': color_theme['title-text']
                             },
+                            fixed_rows={"headers": True},
                             style_cell={
                                 'backgroundColor': color_theme['light-background'],
-                                'color': 'white'
+                                'color': 'white',
+                                'minWidth': '150px',
+                                'width': '150px',
+                                'maxWidth': '150px',
                             },
                             style_header={
                                 'backgroundColor': color_theme['dark-background'],
-                                'color': 'white'
+                                'color': 'white',
+                                'position': 'sticky',
+                                'top': 0,
+                                'zIndex': 10,
                             },
                             style_data={
                                 'border': '1px solid #183A54'
